@@ -30,29 +30,31 @@ const countDownStartDate = new Date("April 22, 2024 00:00:00");
 // Calculate the end date 30 working days from the start date (excluding weekends)
 const countDownEndDate = addWorkingDays(countDownStartDate, 30);
 
-// Check the current time
-const now = new Date().getTime();
+// Function to update the countdown display
+function updateCountdown() {
+    const now = new Date();
+    const timeDiff = countDownEndDate - now;
 
-// Check if we should even start the countdown
-if (now < countDownStartDate.getTime()) {
-    document.getElementById("time").innerHTML = "Countdown not started yet!";
-} else {
+    // Check if we should even start the countdown
+    if (now < countDownStartDate) {
+        document.getElementById("time").innerHTML = "Countdown not started yet!";
+        return;
+    }
+
+    // Calculate total days left (not just working days)
+    const totalDaysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
     // Calculate working days left from now until the end date
-    let workingDaysLeft = calculateWorkingDays(new Date(), countDownEndDate);
+    const workingDaysLeft = calculateWorkingDays(now, countDownEndDate);
 
-    // Immediately display the initial working days left
-    document.getElementById("time").innerHTML = workingDaysLeft + " working days left";
-
-    // Update the countdown every day (86400000 ms = 1 day)
-    const x = setInterval(function() {
-        const now = new Date();
-        workingDaysLeft = calculateWorkingDays(now, countDownEndDate);
-
-        if (workingDaysLeft > 0) {
-            document.getElementById("time").innerHTML = workingDaysLeft + " working days left";
-        } else {
-            clearInterval(x);
-            document.getElementById("time").innerHTML = "EXPIRED";
-        }
-    }, 86400000); // Update every day
+    if (totalDaysLeft > 0) {
+        document.getElementById("time").innerHTML = `${workingDaysLeft} working days left / ${totalDaysLeft} total days left`;
+    } else {
+        clearInterval(x);
+        document.getElementById("time").innerHTML = "EXPIRED";
+    }
 }
+
+// Update the countdown every day
+updateCountdown();
+const x = setInterval(updateCountdown, 86400000); // Update every day

@@ -33,4 +33,23 @@ if (now < countDownStartDate.getTime()) {
         // Get today's date and time
         const now = new Date().getTime();
 
-        // Find the distance b
+        // Find the distance between now and the count down end date
+        const distance = countDownEndTime - now;
+
+        // If the current time is before the end time, show the countdown
+        if (distance > 0) {
+            // Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the result in an element with id="time"
+            document.getElementById("time").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s `;
+        } else {
+            // If the count down is over, write some text
+            clearInterval(x);
+            document.getElementById("time").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+}

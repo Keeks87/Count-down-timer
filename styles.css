@@ -1,29 +1,29 @@
 body {
     font-family: 'Lato', sans-serif; /* Using Lato font */
-    background-color: #f0f0f0; /* Light grey background */
     margin: 0;
     padding: 0;
-    color: #012169; /* Dark blue text */
-}
-
-#countdown {
-    font-size: 3rem; /* Larger font size for better visibility */
-    font-family: 'Lato', sans-serif;
+    background: url('https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg') no-repeat center center fixed;
+    background-size: cover; /* Cover the entire page */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #FFFFFF; /* White background for the countdown area */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-    border-radius: 8px; /* Rounded corners */
-    margin: 20px;
-    color: #C8102E; /* Red text for the countdown */
 }
 
-#countdown span {
+#countdown {
+    font-size: 3rem; /* Larger font size for better visibility */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    color: #C8102E; /* Red text for the countdown */
     padding: 20px 40px;
-    background-color: #012169; /* Blue background for the timer */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    border: 3px solid #012169; /* Blue border to tie in with the flag colors */
+}
+
+#time {
+    background-color: #012169; /* Blue background for the timer numbers */
     color: #FFFFFF; /* White text within the timer */
+    padding: 10px 20px;
     border-radius: 5px; /* Slightly rounded corners for the timer */
-    border: 3px solid #C8102E; /* Red border */
+    border: 2px solid #C8102E; /* Red border */
 }

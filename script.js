@@ -2,9 +2,7 @@
 function addWorkingDays(startDate, numberOfDays) {
     let currentDate = new Date(startDate);
     while (numberOfDays > 0) {
-        // Move to the next day
         currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
-        // If current day is Saturday (6) or Sunday (0), don't count it as a working day
         if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
             numberOfDays--;
         }
@@ -12,47 +10,49 @@ function addWorkingDays(startDate, numberOfDays) {
     return currentDate;
 }
 
-// Initialize the start date of the countdown (April 22, 2024)
+// Helper function to calculate working days between two dates
+function calculateWorkingDays(startDate, endDate) {
+    let count = 0;
+    let currentDate = new Date(startDate);
+    
+    while (currentDate < endDate) {
+        currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+        if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// Set the start date of the countdown (April 22, 2024)
 const countDownStartDate = new Date("April 22, 2024 00:00:00");
 
 // Calculate the end date 30 working days from the start date (excluding weekends)
 const countDownEndDate = addWorkingDays(countDownStartDate, 30);
 
-// Display the calculated end date for verification
-console.log("Calculated End Date: " + countDownEndDate.toDateString());
-
 // Check the current time
 const now = new Date().getTime();
 
-// Check if the countdown should start
+// Check if we should even start the countdown
 if (now < countDownStartDate.getTime()) {
     document.getElementById("time").innerHTML = "Countdown not started yet!";
 } else {
-    // Set the time when the countdown should end
-    const countDownEndTime = countDownEndDate.getTime();
+    // Calculate working days left from now until the end date
+    let workingDaysLeft = calculateWorkingDays(new Date(), countDownEndDate);
 
-    // Update the countdown every 1 second
+    // Immediately display the initial working days left
+    document.getElementById("time").innerHTML = workingDaysLeft + " working days left";
+
+    // Update the countdown every day (86400000 ms = 1 day)
     const x = setInterval(function() {
-        // Get today's date and time
-        const now = new Date().getTime();
+        const now = new Date();
+        workingDaysLeft = calculateWorkingDays(now, countDownEndDate);
 
-        // Find the distance between now and the countdown end date
-        const distance = countDownEndTime - now;
-
-        // Show the countdown if the current time is before the end time
-        if (distance > 0) {
-            // Time calculations for days, hours, minutes, and seconds
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            // Display the result in the element with id="time"
-            document.getElementById("time").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s `;
+        if (workingDaysLeft > 0) {
+            document.getElementById("time").innerHTML = workingDaysLeft + " working days left";
         } else {
-            // Display "EXPIRED" if the countdown is over
             clearInterval(x);
             document.getElementById("time").innerHTML = "EXPIRED";
         }
-    }, 1000);
+    }, 86400000); // Update every day
 }

@@ -12,42 +12,45 @@ function addWorkingDays(startDate, numberOfDays) {
     return currentDate;
 }
 
-// Set the start date of the countdown (April 22, 2024)
+// Initialize the start date of the countdown (April 22, 2024)
 const countDownStartDate = new Date("April 22, 2024 00:00:00");
 
 // Calculate the end date 30 working days from the start date (excluding weekends)
 const countDownEndDate = addWorkingDays(countDownStartDate, 30);
 
-// Current date and time
+// Display the calculated end date for verification
+console.log("Calculated End Date: " + countDownEndDate.toDateString());
+
+// Check the current time
 const now = new Date().getTime();
 
-// Check if we should even start the countdown
+// Check if the countdown should start
 if (now < countDownStartDate.getTime()) {
     document.getElementById("time").innerHTML = "Countdown not started yet!";
 } else {
     // Set the time when the countdown should end
     const countDownEndTime = countDownEndDate.getTime();
 
-    // Update the count down every 1 second
+    // Update the countdown every 1 second
     const x = setInterval(function() {
         // Get today's date and time
         const now = new Date().getTime();
 
-        // Find the distance between now and the count down end date
+        // Find the distance between now and the countdown end date
         const distance = countDownEndTime - now;
 
-        // If the current time is before the end time, show the countdown
+        // Show the countdown if the current time is before the end time
         if (distance > 0) {
-            // Time calculations for days, hours, minutes and seconds
+            // Time calculations for days, hours, minutes, and seconds
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Output the result in an element with id="time"
+            // Display the result in the element with id="time"
             document.getElementById("time").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s `;
         } else {
-            // If the count down is over, write some text
+            // Display "EXPIRED" if the countdown is over
             clearInterval(x);
             document.getElementById("time").innerHTML = "EXPIRED";
         }

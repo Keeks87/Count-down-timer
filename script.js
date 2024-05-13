@@ -3,6 +3,7 @@ function addWorkingDays(startDate, numberOfDays) {
     let currentDate = new Date(startDate);
     while (numberOfDays > 0) {
         currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+        // Weekdays are Monday (1) to Friday (5)
         if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
             numberOfDays--;
         }
@@ -15,11 +16,13 @@ function calculateWorkingDays(startDate, endDate) {
     let count = 0;
     let currentDate = new Date(startDate);
     
-    while (currentDate < endDate) {
-        currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+    // This loop counts weekdays in the range
+    while (currentDate <= endDate) {
+        // Weekdays are Monday (1) to Friday (5)
         if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
             count++;
         }
+        currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
     }
     return count;
 }
@@ -30,12 +33,15 @@ const countDownStartDate = new Date("April 22, 2024 00:00:00");
 // Calculate the end date 30 working days from the start date (excluding weekends)
 const countDownEndDate = addWorkingDays(countDownStartDate, 30);
 
-// Function to update the countdown display
+// Update the countdown display
 function updateCountdown() {
     const now = new Date();
     const timeDiff = countDownEndDate - now;
 
-    // Check if we should even start the countdown
+    // Debugging output
+    console.log("Updating countdown:", now);
+
+    // If it's before the countdown start date
     if (now < countDownStartDate) {
         document.getElementById("time").innerHTML = "Countdown not started yet!";
         return;
@@ -47,7 +53,10 @@ function updateCountdown() {
     // Calculate working days left from now until the end date
     const workingDaysLeft = calculateWorkingDays(now, countDownEndDate);
 
-    if (totalDaysLeft > 0) {
+    // Debugging output
+    console.log("Working Days Left:", workingDaysLeft, "Total Days Left:", totalDaysLeft);
+
+    if (workingDaysLeft > 0) {
         document.getElementById("time").innerHTML = `${workingDaysLeft} working days left / ${totalDaysLeft} total days left`;
     } else {
         clearInterval(x);
@@ -55,6 +64,8 @@ function updateCountdown() {
     }
 }
 
-// Update the countdown every day
+// Initially update the countdown
 updateCountdown();
-const x = setInterval(updateCountdown, 86400000); // Update every day
+
+// Interval to update the countdown (e.g., every 10 seconds for testing)
+const x = setInterval(updateCountdown, 10000); // Update every 10 seconds for testing

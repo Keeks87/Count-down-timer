@@ -4,8 +4,8 @@ This project is a simple countdown timer built using HTML, CSS, and JavaScript. 
 
 ## Features
 
-- Displays the remaining days, hours, minutes, and seconds to a specified date.
-- Updates the countdown every second.
+- Displays the remaining days and working days to a specified date.
+- Updates the countdown every day.
 - Responsive design that works on desktop and mobile browsers.
 
 ## Technologies Used

@@ -31,7 +31,7 @@ function calculateWorkingDays(startDate, endDate) {
 const countDownStartDate = new Date("May 21, 2024 00:00:00");
 
 // Calculate the end date 30 working days from the start date (excluding weekends)
-const countDownEndDate = addWorkingDays(countDownStartDate, 7);
+const countDownEndDate = addWorkingDays(countDownStartDate, 6);
 
 // Update the countdown display
 function updateCountdown() {
